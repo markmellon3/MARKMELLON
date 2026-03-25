@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARKMELLONINDUSTRYS</title>
+   <!-- Favicon -->
+<link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+<link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+<link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88)),
+                  url('https://ik.imagekit.io/s95tumxuk/Babemaria.jpeg?updatedAt=1774443375709') center/cover no-repeat fixed;
+      min-height: 100dvh;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-link {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: #60a5fa;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- HEADER / NAVBAR -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+    <div class="max-w-screen-2xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg">M</div>
+        <span class="text-2xl md:text-3xl font-semibold tracking-tighter">MARKMELLON</span>
+      </div>
+
+      <!-- 4 Navigation Buttons -->
+      <div class="flex items-center gap-8 text-lg font-medium">
+        <a href="#" class="nav-link"></a>
+        <a href="#" class="nav-link"></a>
+        <a href="#" class="nav-link"></a>
+        <a href="#" onclick="alert('Logged out successfully!'); window.location.href='index.html';" 
+           class="nav-link text-red-400 hover:text-red-500">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area (you can add your content here later) -->
+  <div class="pt-32 pb-20 min-h-screen flex items-center justify-center text-center px-6">
+    <div class="max-w-2xl">
+      <h1 class="text-6xl md:text-7xl font-bold tracking-tighter mb-6">
+        Welcome to<br>
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">MARKMELLON INDUSTRIES</span>
+      </h1>
+      <p class="text-xl text-zinc-300">
+        Your vision. Our innovation.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-black py-12 border-t border-white/10">
+    <div class="max-w-screen-2xl mx-auto px-6 text-center text-zinc-500 text-sm">
+      © 2026 MARKMELLONINDUSTRYS
+    </div>
+  </footer>
+</body>
+</html>

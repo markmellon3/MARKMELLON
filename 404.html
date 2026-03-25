@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | MARKMELLON</title>
+   <!-- Favicon -->
+<link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+<link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+<link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #000;
+      color: white;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .hero-bg {
+      background: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88)),
+                  url('https://ik.imagekit.io/s95tumxuk/IMG_0713.jpeg?updatedAt=1774443432937') center/cover no-repeat fixed;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .neon-glow {
+      text-shadow: 
+        0 0 20px #3b82f6,
+        0 0 40px #8b5cf6,
+        0 0 80px #ec4899;
+    }
+
+    .error-code {
+      font-size: 12rem;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .grid-bg {
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 70px 70px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero-bg grid-bg">
+    <div class="text-center px-6 max-w-2xl z-10">
+      <!-- Logo -->
+      <div class="flex items-center justify-center gap-3 mb-8">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-lg">M</div>
+        <span class="text-3xl font-semibold tracking-tighter">MARKMELLON</span>
+      </div>
+
+      <div class="error-code neon-glow">404</div>
+
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tighter mt-4 mb-4">
+        LOST IN THE FUTURE
+      </h1>
+
+      <p class="text-xl text-zinc-400 max-w-md mx-auto mb-10">
+        The page you're looking for doesn't exist or has been moved to another dimension.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="index.html" 
+           class="group flex items-center justify-center gap-3 bg-white text-black font-semibold text-lg px-10 py-5 rounded-3xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-2xl shadow-purple-500/30">
+          RETURN TO HOME
+          <span class="text-2xl group-active:rotate-45 transition-transform">→</span>
+        </a>
+
+        <button onclick="goBack()" 
+                class="flex items-center justify-center gap-3 border border-white/30 hover:border-white/60 font-semibold text-lg px-10 py-5 rounded-3xl transition-all duration-300">
+          GO BACK
+        </button>
+      </div>
+
+      <div class="mt-16 text-xs tracking-[2px] text-zinc-500">
+        ERROR CODE: PAGE_NOT_FOUND • MARKMELLON INDUSTRIES
+      </div>
+    </div>
+
+    <!-- Floating futuristic elements -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-[10px] tracking-[4px] opacity-40 flex gap-8">
+      <div>01 • SYSTEM FAILURE</div>
+      <div>02 • DIMENSION SHIFT</div>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // Press Enter or Space to go home
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Enter" || e.key === " ") {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

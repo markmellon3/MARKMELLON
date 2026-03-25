@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARKMELLONINDUSTRYS</title>
+   <!-- Favicon -->
+<link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+<link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+<link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      min-height: 100dvh;
+      background: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88)),
+                  url('https://ik.imagekit.io/s95tumxuk/IMG_0713.jpeg?updatedAt=1774443432937') center/cover no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .neon-glow {
+      text-shadow: 
+        0 0 20px #3b82f6,
+        0 0 40px #8b5cf6,
+        0 0 60px #ec4899;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .auth-card {
+      transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      margin-top: 2rem;
+    }
+    
+    .auth-card.show {
+      max-height: 820px;
+      opacity: 1;
+    }
+
+    /* Refined Loader */
+    .loader {
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(0, 0, 0, 0.25);
+      border-top: 2.5px solid #000000;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Button loading state */
+    button:disabled {
+      opacity: 0.85;
+      cursor: not-allowed;
+    }
+
+    button.loading {
+      background-color: #f3f4f6;
+      color: #111827;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 767px) {
+      .hero {
+        background-attachment: scroll;
+        padding: 1.5rem 0;
+      }
+      .auth-card {
+        margin-top: 2rem;
+        width: 95%;
+        max-width: 100%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero {
+        padding-top: 80px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+    <!-- Navbar -->
+    <nav class="absolute top-0 left-0 right-0 z-50 px-5 sm:px-8 py-6 md:px-12 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg">M</div>
+        <span class="text-2xl md:text-3xl font-semibold tracking-tighter">MARKMELLON</span>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-screen-2xl mx-auto px-6 sm:px-8 md:px-12 relative z-10 text-center md:text-left w-full">
+      <div class="max-w-2xl mx-auto md:mx-0">
+        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-5 py-2.5 text-xs sm:text-sm mb-8 mx-auto md:mx-0">
+          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+          WELC0ME BACK
+        </div>
+
+        <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tighter neon-glow">
+          THE FUTURE<br>
+          IS <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">ALREADY HERE</span>
+        </h1>
+
+        <p class="mt-6 md:mt-8 text-lg sm:text-xl md:text-2xl text-zinc-300 max-w-md mx-auto md:mx-0 leading-relaxed">
+          Build. Launch. Scale.<br>
+          With zero friction and infinite power.
+        </p>
+
+        <!-- Login Button -->
+        <button onclick="toggleAuthCard()"
+                class="mt-10 sm:mt-12 mx-auto md:mx-0 group flex items-center justify-center gap-4 bg-white text-black font-semibold text-base sm:text-lg px-8 sm:px-10 py-5 sm:py-6 rounded-3xl hover:scale-105 active:scale-95 transition-all duration-300 shadow-2xl shadow-purple-500/30 w-full max-w-xs md:w-auto">
+          LOGIN TO CONTINUE
+          <span class="text-2xl group-active:rotate-45 transition-transform">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Glass Auth Card -->
+    <div id="authCard" class="auth-card glass mx-auto px-6 py-8 md:p-10 rounded-3xl shadow-2xl max-w-lg">
+
+      <!-- Login Form -->
+      <div id="loginForm">
+        <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">Welcome Back</h2>
+        
+        <div class="space-y-6">
+          <input id="loginEmail" type="email" placeholder="Email address" 
+                 class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+
+          <input id="loginPassword" type="password" placeholder="Password" 
+                 class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+
+          <button onclick="login()" id="loginBtn"
+                  class="w-full bg-white text-black font-semibold py-4 rounded-2xl hover:bg-blue-400 hover:text-white transition text-base flex items-center justify-center gap-3">
+            <span id="loginText">Sign In</span>
+          </button>
+
+          <div class="text-center">
+            <button onclick="showForgotPassword()" class="text-blue-400 hover:underline text-sm">
+              Forgot Password?
+            </button>
+          </div>
+
+          <div class="text-center text-sm text-zinc-300">
+            Don't have an account? 
+            <button onclick="switchToSignup()" class="text-white hover:underline font-medium">Create one</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forgot Password Card -->
+      <div id="forgotPasswordForm" class="hidden">
+        <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">Reset Password</h2>
+        <p class="text-center text-zinc-400 mb-6 text-sm">Enter your email and we'll send you a reset link.</p>
+        
+        <div class="space-y-6">
+          <input id="resetEmail" type="email" placeholder="Email address" 
+                 class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+
+          <button onclick="forgotPassword()" id="resetBtn"
+                  class="w-full bg-white text-black font-semibold py-4 rounded-2xl hover:bg-blue-400 hover:text-white transition text-base flex items-center justify-center gap-3">
+            <span id="resetText">Send Reset Link</span>
+          </button>
+
+          <div class="text-center">
+            <button onclick="backToLogin()" class="text-blue-400 hover:underline text-sm">
+              ← Back to Login
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signupForm" class="hidden">
+        <h2 class="text-2xl md:text-3xl font-semibold text-center mb-8">Create Account</h2>
+        
+        <div class="space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <input id="firstName" type="text" placeholder="First name" 
+                   class="bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+            <input id="lastName" type="text" placeholder="Last name" 
+                   class="bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+          </div>
+
+          <input id="signupEmail" type="email" placeholder="Email address" 
+                 class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+
+          <input id="signupPassword" type="password" placeholder="Password (min 8 characters)" 
+                 class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+
+          <input id="confirmPassword" type="password" placeholder="Confirm password" 
+                 class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 text-base focus:outline-none focus:border-blue-400 text-white placeholder-zinc-400">
+
+          <button onclick="signup()" id="signupBtn"
+                  class="w-full bg-white text-black font-semibold py-4 rounded-2xl hover:bg-blue-400 hover:text-white transition text-base flex items-center justify-center gap-3">
+            <span id="signupText">Create Account</span>
+          </button>
+
+          <div class="text-center text-sm text-zinc-300">
+            Already have an account? 
+            <button onclick="switchToLogin()" class="text-white hover:underline font-medium">Sign in</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-3 text-xs tracking-[3px] opacity-60">
+      <div class="w-px h-12 bg-gradient-to-b from-transparent via-white to-transparent"></div>
+      SCROLL
+    </div>
+  </section>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6abD4TVTEAzn7jLqvf62GXKCDLg8PeNw",
+      authDomain: "markmellon-874a3.firebaseapp.com",
+      projectId: "markmellon-874a3",
+      storageBucket: "markmellon-874a3.firebasestorage.app",
+      messagingSenderId: "371160128795",
+      appId: "1:371160128795:web:cf45e7edab5d82b74107be",
+      measurementId: "G-XMMWYVH4HG"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    function toggleAuthCard() {
+      const card = document.getElementById('authCard');
+      card.classList.toggle('show');
+
+      if (window.innerWidth < 768 && card.classList.contains('show')) {
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 400);
+      }
+    }
+
+    function switchToLogin() {
+      document.getElementById('loginForm').classList.remove('hidden');
+      document.getElementById('signupForm').classList.add('hidden');
+      document.getElementById('forgotPasswordForm').classList.add('hidden');
+    }
+
+    function switchToSignup() {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('signupForm').classList.remove('hidden');
+      document.getElementById('forgotPasswordForm').classList.add('hidden');
+    }
+
+    function showForgotPassword() {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('forgotPasswordForm').classList.remove('hidden');
+    }
+
+    function backToLogin() {
+      document.getElementById('forgotPasswordForm').classList.add('hidden');
+      document.getElementById('loginForm').classList.remove('hidden');
+    }
+
+    // Refined Loader Functions
+    function startLoading(btnId, textId, loadingText) {
+      const btn = document.getElementById(btnId);
+      const textSpan = document.getElementById(textId);
+      
+      btn.classList.add('loading');
+      btn.disabled = true;
+      textSpan.innerHTML = `<span class="loader"></span>${loadingText}`;
+    }
+
+    function stopLoading(btnId, textId, originalText) {
+      const btn = document.getElementById(btnId);
+      const textSpan = document.getElementById(textId);
+      
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      textSpan.innerHTML = originalText;
+    }
+
+    function login() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) return alert("Please enter your email and password");
+
+      startLoading('loginBtn', 'loginText', 'Signing in...');
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Login successful! Redirecting...");
+          window.location.href = "dashboard.html";
+        })
+        .catch(error => {
+          if (error.code === "auth/wrong-password" || error.code === "auth/invalid-credential") {
+            alert("Wrong password. Please try again.");
+          } else if (error.code === "auth/user-not-found") {
+            alert("No account found with this email.");
+          } else {
+            alert("Login Error: " + error.message);
+          }
+        })
+        .finally(() => {
+          stopLoading('loginBtn', 'loginText', 'Sign In');
+        });
+    }
+
+    function forgotPassword() {
+      const email = document.getElementById('resetEmail').value.trim() || document.getElementById('loginEmail').value.trim();
+
+      if (!email) return alert("Please enter your email address");
+
+      startLoading('resetBtn', 'resetText', 'Sending reset link...');
+
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          alert("Password reset link has been sent to your email!");
+          backToLogin();
+        })
+        .catch(error => {
+          alert("Error: " + error.message);
+        })
+        .finally(() => {
+          stopLoading('resetBtn', 'resetText', 'Send Reset Link');
+        });
+    }
+
+    function signup() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirm = document.getElementById('confirmPassword').value;
+
+      if (!firstName || !lastName) return alert("Please enter your full name");
+      if (password.length < 8) return alert("Password must be at least 8 characters");
+      if (password !== confirm) return alert("Passwords do not match");
+
+      startLoading('signupBtn', 'signupText', 'Creating your account...');
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          database.ref('names/' + user.uid).set({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            createdAt: Date.now()
+          });
+          alert("Account created successfully! Redirecting...");
+          window.location.href = "dashboard.html";
+        })
+        .catch(error => {
+          alert("Signup Error: " + error.message);
+        })
+        .finally(() => {
+          stopLoading('signupBtn', 'signupText', 'Create Account');
+        });
+    }
+  </script>
+</body>
+</html>
