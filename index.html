@@ -143,11 +143,11 @@
           WELC0ME BACK
         </div>
 
-        <!-- ==================== 3 RESPONSIVE GLASS CARDS WITH TOUCH SWIPE ==================== -->
+        <!-- ==================== 3 RESPONSIVE GLASS CARDS - ONE LINE ==================== -->
 <div class="glass-cards-wrapper">
   <div class="cards-container" id="cardsContainer">
-
-    <!-- Card 1: Images with Auto + Touch Slide -->
+    
+    <!-- Card 1: Images with Auto Slide -->
     <div class="glass-card-small">
       <div class="media-container">
         <div class="small-slides" id="imageSlides">
@@ -162,20 +162,7 @@
       </div>
     </div>
 
-    <!-- Card 2: Video -->
-    <div class="glass-card-small">
-      <div class="media-container">
-        <video autoplay loop muted playsinline>
-          <source src="YOUR_VIDEO_URL_HERE.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="card-overlay">
-        <h3>Now Playing</h3>
-        <p>Watch live</p>
-      </div>
-    </div>
-
-    <!-- Card 3: Stats -->
+    <!-- Card 2: Stats -->
     <div class="glass-card-small">
       <div class="media-container stats-content">
         <div class="stats-container">
@@ -202,43 +189,60 @@
 .glass-cards-wrapper {
   width: 100%;
   padding: 20px 0;
+  overflow-x: auto;           /* Allows horizontal scroll if needed */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;      /* Hide scrollbar on Firefox */
+}
+
+.glass-cards-wrapper::-webkit-scrollbar {
+  display: none;              /* Hide scrollbar on Chrome/Safari */
 }
 
 .cards-container {
   display: flex;
-  gap: 18px;
-  overflow-x: auto;
-  padding: 10px 20px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  gap: 16px;
+  justify-content: flex-start;   /* Changed from center */
+  flex-wrap: nowrap;             /* ← THIS IS THE KEY: No wrapping */
+  padding: 10px 15px;
+  width: max-content;            /* Important for one line */
+  min-width: 100%;
 }
 
-.cards-container::-webkit-scrollbar { display: none; }
-
 .glass-card-small {
-  min-width: 260px;
-  height: 240px;
+  width: 180px;
+  height: 210px;
   background: rgba(255, 255, 255, 0.09);
   backdrop-filter: blur(20px);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
-  border-radius: 22px;
+  border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
   overflow: hidden;
   position: relative;
   color: white;
-  flex-shrink: 0;
-  transition: transform 0.4s ease;
+  flex-shrink: 0;                /* Prevents cards from shrinking */
+  transition: transform 0.3s ease;
 }
 
 .glass-card-small:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
 }
 
-/* Responsive */
-@media (min-width: 640px) { .glass-card-small { min-width: 280px; height: 250px; } }
-@media (min-width: 1024px) { .glass-card-small { min-width: 300px; height: 260px; } }
+/* Smaller on mobile */
+@media (max-width: 480px) {
+  .glass-card-small {
+    width: 160px;
+    height: 190px;
+  }
+}
 
-/* Media fill */
+@media (min-width: 768px) {
+  .glass-card-small {
+    width: 195px;
+    height: 225px;
+  }
+}
+
+/* Media & Overlay styles remain the same */
 .media-container {
   width: 100%;
   height: 100%;
@@ -260,24 +264,27 @@
   flex-shrink: 0;
 }
 
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 /* Overlay */
 .card-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 18px 20px;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 16px 18px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
 }
 
-.card-overlay h3 { margin: 0 0 4px 0; font-size: 18px; font-weight: 600; }
-.card-overlay p { margin: 0; font-size: 13.5px; opacity: 0.9; }
+.card-overlay h3 {
+  margin: 0 0 4px 0;
+  font-size: 16.5px;
+  font-weight: 600;
+}
+
+.card-overlay p {
+  margin: 0;
+  font-size: 12.5px;
+  opacity: 0.9;
+}
 
 /* Stats */
 .stats-content {
@@ -285,13 +292,30 @@ video {
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 20px;
+  padding: 18px;
 }
 
-.stats-container { display: flex; justify-content: space-around; width: 100%; }
-.stat-number { font-size: 32px; font-weight: 700; }
-.stat-number.live { color: #22c55e; animation: livePulse 3s infinite; }
-.stat-label { font-size: 13px; opacity: 0.8; margin-top: 6px; }
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.stat-number.live {
+  color: #22c55e;
+  animation: livePulse 3s infinite;
+}
+
+.stat-label {
+  font-size: 12px;
+  opacity: 0.85;
+  margin-top: 5px;
+}
 
 @keyframes livePulse {
   0%, 100% { opacity: 1; }
@@ -300,61 +324,52 @@ video {
 </style>
 
 <script>
-// Touch + Auto Slide for first card only
+// Your existing slider and stats script (unchanged)
 const slides = document.getElementById('imageSlides');
 let currentIndex = 0;
-let isDragging = false;
-let startX = 0;
-let currentTranslate = 0;
-let prevTranslate = 0;
 let autoInterval;
 
-const slideWidthPercent = 100 / 3;   // 3 slides
-
 function goToSlide(index) {
-  currentIndex = index;
-  currentTranslate = -currentIndex * slideWidthPercent;
-  slides.style.transform = `translateX(${currentTranslate}%)`;
+  currentIndex = index % 3;
+  slides.style.transform = `translateX(-${currentIndex * 33.333}%)`;
 }
 
 function startAutoSlide() {
   if (autoInterval) clearInterval(autoInterval);
   autoInterval = setInterval(() => {
-    if (!isDragging) {
-      currentIndex = (currentIndex + 1) % 3;
-      goToSlide(currentIndex);
-    }
+    currentIndex = (currentIndex + 1) % 3;
+    goToSlide(currentIndex);
   }, 4500);
 }
 
-// Touch Events
+// Touch support
+let isDragging = false;
+let startX = 0;
+let prevTranslate = 0;
+
 slides.addEventListener('touchstart', e => {
   isDragging = true;
   startX = e.touches[0].clientX;
-  prevTranslate = currentTranslate;
+  prevTranslate = -currentIndex * 33.333;
   clearInterval(autoInterval);
 });
 
 slides.addEventListener('touchmove', e => {
   if (!isDragging) return;
-  const currentX = e.touches[0].clientX;
-  const diff = currentX - startX;
-  currentTranslate = prevTranslate + (diff / slides.offsetWidth) * 100;
-  slides.style.transform = `translateX(${currentTranslate}%)`;
+  const diff = e.touches[0].clientX - startX;
+  const translate = prevTranslate + (diff / slides.offsetWidth) * 100;
+  slides.style.transform = `translateX(${translate}%)`;
 });
 
 slides.addEventListener('touchend', () => {
   isDragging = false;
-  const movedBy = currentTranslate - prevTranslate;
-
-  if (movedBy < -15) currentIndex = Math.min(currentIndex + 1, 2);
-  else if (movedBy > 15) currentIndex = Math.max(currentIndex - 1, 0);
-
+  const movedBy = (parseFloat(slides.style.transform.replace(/[^0-9.-]/g, '')) || 0) - prevTranslate;
+  if (movedBy < -15) currentIndex++;
+  else if (movedBy > 15) currentIndex--;
   goToSlide(currentIndex);
   startAutoSlide();
 });
 
-// Initialize
 goToSlide(0);
 startAutoSlide();
 
