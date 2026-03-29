@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery • MARKMELLON INDUSTRIES</title>
+  
+  <link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+  <link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88)),
+                  url('https://ik.imagekit.io/s95tumxuk/Babemaria.jpeg?updatedAt=1774443375709') center/cover no-repeat fixed;
+      min-height: 100dvh;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-link {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .nav-link:hover {
+      color: #60a5fa;
+      transform: translateY(-2px);
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 5vw, 3.2rem);
+    }
+
+    .gallery-card, .album-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .gallery-card:hover, .album-card:hover {
+      transform: scale(1.04) translateY(-4px);
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+    <div class="max-w-screen-2xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-3xl flex items-center justify-center text-3xl font-bold">M</div>
+        <span class="text-3xl md:text-4xl font-semibold tracking-[-2px]">MARKMELLON</span>
+      </div>
+
+      <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="#" class="nav-link text-blue-400 font-semibold">Gallery</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="nav-link">Contact</a>
+      </div>
+
+      <button onclick="toggleMobileMenu()" class="md:hidden w-11 h-11 flex items-center justify-center text-4xl">
+        ☰
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="hidden md:hidden glass border-t border-white/10 px-6 py-8">
+      <div class="flex flex-col gap-6 text-xl font-medium">
+        <a href="dashboard.html" onclick="toggleMobileMenu()" class="nav-link">Home</a>
+        <a href="#" onclick="toggleMobileMenu()" class="nav-link text-blue-400 font-semibold">Gallery</a>
+        <a href="#" onclick="toggleMobileMenu()" class="nav-link">About</a>
+        <a href="#" onclick="toggleMobileMenu()" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="pt-28 md:pt-32 pb-12 text-center px-6">
+    <h1 class="section-title font-bold tracking-tight">MarkMellon Gallery</h1>
+    <p class="text-zinc-400 mt-3 text-lg">Discover our creative journey through images</p>
+  </div>
+
+  <!-- NEWLY ADDED SLIDER -->
+  <section class="max-w-screen-2xl mx-auto px-6 md:px-12 pb-10">
+    <h2 class="text-2xl font-semibold tracking-tight mb-6">✦ Newly Added Images</h2>
+    <div class="carousel-container glass shadow-2xl rounded-3xl overflow-hidden">
+      <div id="newCarouselTrack" class="carousel-track flex"></div>
+    </div>
+  </section>
+
+  <!-- ALBUMS SECTION -->
+  <section class="max-w-screen-2xl mx-auto px-6 md:px-12 py-10">
+    <h2 class="text-2xl font-semibold tracking-tight mb-8">Albums</h2>
+    <div id="albumsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </section>
+
+  <!-- ALL IMAGES SECTION -->
+  <section class="max-w-screen-2xl mx-auto px-6 md:px-12 py-10">
+    <h2 class="text-2xl font-semibold tracking-tight mb-8">All Images</h2>
+    <div id="allImagesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4"></div>
+  </section>
+
+  <!-- ALBUM VIEWER MODAL -->
+  <div id="albumModal" class="hidden fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4">
+    <div class="max-w-6xl w-full glass rounded-3xl overflow-hidden max-h-[95vh] flex flex-col">
+      <div class="p-6 border-b border-white/10 flex items-center justify-between">
+        <h3 id="albumModalTitle" class="text-2xl font-semibold"></h3>
+        <button onclick="closeAlbumModal()" class="text-4xl leading-none hover:text-red-400">×</button>
+      </div>
+      <div id="albumImagesGrid" class="p-6 overflow-auto flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+    </div>
+  </div>
+
+  <!-- SINGLE IMAGE LIGHTBOX -->
+  <div id="lightbox" onclick="if(event.target.id === 'lightbox') closeLightbox()" 
+       class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[10000] flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full glass rounded-3xl overflow-hidden relative">
+      <button onclick="closeLightbox()" class="absolute top-6 right-6 z-10 glass w-12 h-12 rounded-3xl flex items-center justify-center text-4xl">×</button>
+      
+      <img id="lightboxImage" src="" class="w-full max-h-[70vh] object-contain">
+
+      <div class="p-6">
+        <h3 id="lightboxTitle" class="text-2xl font-semibold"></h3>
+        <p id="lightboxDesc" class="text-zinc-400"></p>
+
+        <div class="flex flex-wrap gap-6 mt-6 text-sm">
+          <div>👁️ <span id="viewCount">0</span> Views</div>
+          <div>❤️ <span id="likeCount">0</span> Likes</div>
+          <div>👆 <span id="clickCount">0</span> Clicks</div>
+        </div>
+
+        <div class="flex gap-4 mt-8">
+          <button onclick="likeImage()" class="flex-1 py-4 glass rounded-3xl font-medium flex items-center justify-center gap-2 hover:bg-white/10">❤️ Like</button>
+          <button onclick="shareImage()" class="flex-1 py-4 glass rounded-3xl font-medium flex items-center justify-center gap-2 hover:bg-white/10">Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN REQUIRED MODAL -->
+  <div id="loginModal" class="hidden fixed inset-0 bg-black/95 z-[99999] flex items-center justify-center p-6">
+    <div class="glass max-w-md w-full rounded-3xl p-10 text-center">
+      <div class="text-6xl mb-6">🔒</div>
+      <h3 class="text-3xl font-semibold mb-4">Login Required</h3>
+      <p class="text-zinc-300 mb-8">You need to have an account to view the gallery.<br>Please login or create an account to continue.</p>
+      
+      <button onclick="goToLogin()" 
+              class="w-full py-5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl font-semibold text-lg mb-4">
+        Go to Login / Sign Up
+      </button>
+      
+      <button onclick="closeLoginModal()" 
+              class="w-full py-5 glass rounded-3xl font-medium">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-black py-12 border-t border-white/10 mt-10">
+    <div class="max-w-screen-2xl mx-auto px-6 text-center text-zinc-500 text-sm">
+      © 2026 MARKMELLON INDUSTRIES • Kampala, Uganda
+    </div>
+  </footer>
+
+  <script>
+    // ==================== FIREBASE CONFIG ====================
+    const firebaseConfig = {
+      apiKey: "AIzaSyA6abD4TVTEAzn7jLqvf62GXKCDLg8PeNw",
+      authDomain: "markmellon-874a3.firebaseapp.com",
+      projectId: "markmellon-874a3",
+      storageBucket: "markmellon-874a3.firebasestorage.app",
+      messagingSenderId: "371160128795",
+      appId: "1:371160128795:web:cf45e7edab5d82b74107be",
+      measurementId: "G-XMMWYVH4HG"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const auth = firebase.auth();
+
+    let currentImageKey = null;
+
+    // Check if user is logged in
+    function checkUserAuth() {
+      return new Promise((resolve) => {
+        auth.onAuthStateChanged(user => {
+          resolve(user);
+        });
+      });
+    }
+
+    // Auto check authentication on page load
+    async function handleAuthCheck() {
+      const user = await checkUserAuth();
+      if (!user) {
+        // User is not logged in → show login modal
+        document.getElementById('loginModal').classList.remove('hidden');
+        document.getElementById('loginModal').classList.add('flex');
+      } else {
+        // User is logged in → load gallery normally
+        initGallery();
+      }
+    }
+
+    function goToLogin() {
+      window.location.href = "index.html";
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal').classList.add('hidden');
+      document.getElementById('loginModal').classList.remove('flex');
+    }
+
+    // ==================== GALLERY FUNCTIONS (unchanged core logic) ====================
+    function initGallery() {
+      loadNewlyAdded();
+      renderAlbums();
+      renderAllImages();
+      checkDirectLink();
+      console.log('%c✅ MARKMELLON GALLERY - Authenticated user access granted', 'color:#60a5fa');
+    }
+
+    function loadNewlyAdded() {
+      const track = document.getElementById('newCarouselTrack');
+      track.innerHTML = '';
+      database.ref('images').once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        Object.keys(data).forEach(key => {
+          const img = data[key];
+          const slide = document.createElement('div');
+          slide.className = 'carousel-slide min-w-full';
+          slide.innerHTML = `<img src="${img.src}" class="w-full aspect-video object-cover">`;
+          track.appendChild(slide);
+        });
+      });
+    }
+
+    function renderAlbums() {
+      const container = document.getElementById('albumsGrid');
+      container.innerHTML = '';
+      database.ref('albums').once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        Object.keys(data).forEach(key => {
+          const album = data[key];
+          const html = `
+            <div onclick="openAlbum('${key}')" class="album-card glass rounded-3xl overflow-hidden cursor-pointer">
+              <img src="${album.cover}" class="w-full aspect-square object-cover">
+              <div class="p-4">
+                <h4 class="font-semibold text-lg">${album.title}</h4>
+                <p class="text-sm text-zinc-400">${album.count || album.images?.length || 0} images</p>
+              </div>
+            </div>
+          `;
+          container.innerHTML += html;
+        });
+      });
+    }
+
+    function renderAllImages() {
+      const container = document.getElementById('allImagesGrid');
+      container.innerHTML = '';
+      database.ref('allImages').once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        Object.keys(data).forEach(key => {
+          const img = data[key];
+          const html = `
+            <div onclick="openSingleImage('${key}')" class="gallery-card glass rounded-3xl overflow-hidden cursor-pointer">
+              <img src="${img.src}" class="w-full aspect-square object-cover">
+              <div class="p-4">
+                <p class="font-medium">${img.title}</p>
+              </div>
+            </div>
+          `;
+          container.innerHTML += html;
+        });
+      });
+    }
+
+    function checkDirectLink() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const imageKey = urlParams.get('image');
+      if (imageKey) openSingleImage(imageKey);
+    }
+
+    // View / Like / Share functions (same as before)
+    function openSingleImage(key) {
+      currentImageKey = key;
+      database.ref(`allImages/${key}`).once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        document.getElementById('lightboxImage').src = data.src;
+        document.getElementById('lightboxTitle').textContent = data.title;
+        document.getElementById('lightboxDesc').textContent = "MarkMellon Industries";
+
+        loadImageStats(key);
+        document.getElementById('lightbox').classList.remove('hidden');
+        document.getElementById('lightbox').classList.add('flex');
+
+        incrementViewCount(key);
+      });
+    }
+
+    function loadImageStats(key) {
+      database.ref(`views/${key}`).once('value', (snap) => {
+        const stats = snap.val() || { views: 0, likes: 0, clicks: 0 };
+        document.getElementById('viewCount').textContent = stats.views || 0;
+        document.getElementById('likeCount').textContent = stats.likes || 0;
+        document.getElementById('clickCount').textContent = stats.clicks || 0;
+      });
+    }
+
+    function incrementViewCount(key) {
+      database.ref(`views/${key}/views`).transaction((current) => (current || 0) + 1);
+    }
+
+    function likeImage() {
+      if (!currentImageKey) return;
+      database.ref(`views/${currentImageKey}/likes`).transaction((current) => (current || 0) + 1);
+      loadImageStats(currentImageKey);
+    }
+
+    function shareImage() {
+      if (!currentImageKey) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?image=${currentImageKey}`;
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert("✅ Share link copied! Anyone with this link will see this image.");
+      });
+    }
+
+    function openSingleImageFromAlbum(src, title) {
+      closeAlbumModal();
+      document.getElementById('lightboxImage').src = src;
+      document.getElementById('lightboxTitle').textContent = title;
+      document.getElementById('lightboxDesc').textContent = "From Album";
+      document.getElementById('lightbox').classList.remove('hidden');
+      document.getElementById('lightbox').classList.add('flex');
+    }
+
+    function openAlbum(albumKey) {
+      database.ref(`albums/${albumKey}`).once('value', (snapshot) => {
+        const album = snapshot.val();
+        if (!album) return;
+        document.getElementById('albumModalTitle').textContent = album.title;
+        const grid = document.getElementById('albumImagesGrid');
+        grid.innerHTML = '';
+
+        if (album.images) {
+          Object.values(album.images).forEach(image => {
+            const item = `
+              <div onclick="openSingleImageFromAlbum('${image.src}', '${image.title}')" 
+                   class="rounded-3xl overflow-hidden cursor-pointer">
+                <img src="${image.src}" class="w-full aspect-square object-cover">
+              </div>
+            `;
+            grid.innerHTML += item;
+          });
+        }
+        document.getElementById('albumModal').classList.remove('hidden');
+        document.getElementById('albumModal').classList.add('flex');
+      });
+    }
+
+    function closeAlbumModal() {
+      const modal = document.getElementById('albumModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function closeLightbox() {
+      const lb = document.getElementById('lightbox');
+      lb.classList.add('hidden');
+      lb.classList.remove('flex');
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+
+    // ==================== INITIALIZE ====================
+    window.onload = function () {
+      handleAuthCheck();   // This checks if user is logged in
+    };
+  </script>
+</body>
+</html>
