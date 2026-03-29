@@ -4,22 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MARKMELLONINDUSTRYS</title>
-   <!-- Favicon -->
-<link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
-<link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
-<link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+  <link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+  <link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
 
-<link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
 
+    :root {
+      --tw-color-primary: #60a5fa;
+    }
+
     body {
       font-family: 'Space Grotesk', sans-serif;
       overflow-x: hidden;
-      background: linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88)),
-                  url('https://ik.imagekit.io/s95tumxuk/Babemaria.jpeg?updatedAt=1774443375709') center/cover no-repeat fixed;
       min-height: 100dvh;
     }
 
@@ -31,12 +36,108 @@
     }
 
     .nav-link {
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .nav-link:hover {
       color: #60a5fa;
       transform: translateY(-2px);
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 6.5vw, 4.8rem);
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4.5vw, 3rem);
+    }
+
+    .compact-glass {
+      padding: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .compact-glass { padding: 1.5rem; }
+    }
+
+    @media (min-width: 1024px) {
+      .compact-glass { padding: 1.75rem; }
+    }
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      transition: all 0.9s cubic-bezier(0.32, 1.5, 0.6, 1);
+      opacity: 0.75;
+      transform: scale(0.92) translateY(15px);
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Enhanced slide animation for images */
+    .carousel-slide img {
+      transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .carousel-slide.active img {
+      animation: featuredSlideIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes featuredSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(60px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-slide:hover .video-overlay {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    @media (min-width: 1280px) {
+      .max-w-screen-2xl {
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .compact-glass {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .compact-glass:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.25);
     }
   </style>
 </head>
@@ -44,273 +145,194 @@
 
   <!-- HEADER / NAVBAR -->
   <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
-    <div class="max-w-screen-2xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between">
-      <!-- Logo -->
+    <div class="max-w-screen-2xl mx-auto px-6 md:px-12 py-5 md:py-6 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg">M</div>
-        <span class="text-2xl md:text-3xl font-semibold tracking-tighter">MARKMELLON</span>
+        <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-3xl flex items-center justify-center text-3xl font-bold shadow-2xl">M</div>
+        <span class="text-3xl md:text-4xl font-semibold tracking-[-2px]">MARKMELLON</span>
       </div>
 
-      <!-- 4 Navigation Buttons -->
-      <div class="flex items-center gap-8 text-lg font-medium">
-        <a href="#" class="nav-link"></a>
-        <a href="#" class="nav-link"></a>
-        <a href="#" class="nav-link"></a>
-        <a href="#" onclick="alert('Logged out successfully!'); window.location.href='index.html';" 
-           class="nav-link text-red-400 hover:text-red-500">Logout</a>
+      <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+        <a href="#featured" class="nav-link">Featured</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#gallery" class="nav-link">Gallery</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+
+      <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 flex items-center justify-center text-3xl">
+        ☰
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden glass border-t border-white/10 px-6 py-6">
+      <div class="flex flex-col gap-6 text-lg font-medium">
+        <a href="#featured" onclick="toggleMobileMenu()" class="nav-link">Featured</a>
+        <a href="#about" onclick="toggleMobileMenu()" class="nav-link">About</a>
+        <a href="#gallery" onclick="toggleMobileMenu()" class="nav-link">Gallery</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="nav-link">Contact</a>
+        <a href="#" onclick="logout()" class="nav-link text-red-400 hover:text-red-500">Logout</a>
       </div>
     </div>
   </nav>
 
-  <!-- Main Content Area (you can add your content here later) -->
-  <div class="pt-32 pb-20 min-h-screen flex items-center justify-center text-center px-6">
-    <div class="max-w-2xl">
-      <h1 class="text-6xl md:text-7xl font-bold tracking-tighter mb-6">
+  <!-- HERO -->
+  <div class="pt-28 md:pt-32 pb-16 md:pb-24 min-h-screen flex items-center justify-center text-center px-6">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="hero-title font-bold tracking-[-3px] leading-none mb-6">
         Welcome to<br>
         <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">MARKMELLON INDUSTRIES</span>
       </h1>
-      <p class="text-xl text-zinc-300">
-        Your vision. Our innovation.
+      <p class="text-xl md:text-2xl text-zinc-300 max-w-md mx-auto">
+        Your vision.<br class="md:hidden"> Our innovation.
       </p>
+      
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#featured" 
+           class="glass px-10 py-5 rounded-3xl font-medium text-lg flex items-center gap-3 hover:scale-105 transition-transform">
+          <span>Explore Featured</span>
+          <span class="text-2xl">→</span>
+        </a>
+        <button onclick="showCategoriesModal()" 
+                class="border border-white/30 px-10 py-5 rounded-3xl font-medium text-lg flex items-center gap-3 hover:bg-white/10 transition-colors">
+          Categories
+        </button>
+      </div>
     </div>
   </div>
 
- <!-- ==================== TWO SMALL GLASS CARDS ==================== -->
-
-<!-- 1. FREE PROMO CARD (Smaller) -->
-<div class="glass-promo-card" id="freePromoCard">
-  <div class="card-inner">
-    <div class="card-header">
-      <h3 id="promoTitle">Free 500 TikTok Likes + 100 IG Followers</h3>
-      <p id="promoSubtitle">1 request per day • Share to unlock</p>
-    </div>
-
-    <div class="service-buttons" id="promoServiceButtons">
-      <button class="service-btn tiktok" data-service="tiktok" id="promoTiktokBtn">🎵 500 TikTok Likes</button>
-      <button class="service-btn instagram" data-service="instagram" id="promoInstagramBtn">📸 100 IG Followers</button>
-    </div>
-
-    <div class="form-section" id="promoFormSection">
-      <form id="promoForm">
-        <input type="hidden" id="promoSelectedService">
-
-        <div class="form-group">
-          <input type="text" id="promoUsername" placeholder="Username / @handle" required>
-        </div>
-        <div class="form-group">
-          <input type="email" id="promoEmail" placeholder="Email address" required>
-        </div>
-        <div class="form-group">
-          <input type="url" id="promoLink" placeholder="Post / Profile Link" required>
-        </div>
-
-        <div class="share-section" id="promoShareSection">
-          <h4>Share this site 5 times to unlock</h4>
-          <div class="share-buttons" id="promoShareButtons"></div>
-          <div class="progress-bar"><span id="promoShareCount">0</span>/5</div>
-        </div>
-
-        <div class="action-buttons">
-          <button type="button" id="promoRequestBtn" class="request-btn" disabled>🚀 Send Free Request</button>
-          <button type="button" id="promoPayBtn" class="pay-btn" style="display:none;">💰 Pay for Unlimited</button>
-        </div>
-      </form>
+  <!-- CATEGORIES MODAL -->
+  <div onclick="if(event.target.id === 'categoriesModal') hideCategoriesModal()" 
+       id="categoriesModal"
+       class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-6">
+    <div onclick="event.stopImmediatePropagation()" 
+         class="glass max-w-lg w-full rounded-3xl p-8 text-center">
+      <h3 class="text-3xl font-semibold mb-8">Categories</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <a href="gallery.html" onclick="hideCategoriesModal()" 
+           class="glass py-6 rounded-3xl font-medium text-lg hover:scale-105 transition-transform">Gallery</a>
+        <a href="#" onclick="hideCategoriesModal()" 
+           class="glass py-6 rounded-3xl font-medium text-lg hover:scale-105 transition-transform">Events</a>
+        <a href="#about" onclick="hideCategoriesModal()" 
+           class="glass py-6 rounded-3xl font-medium text-lg hover:scale-105 transition-transform">About</a>
+        <a href="#" onclick="hideCategoriesModal()" 
+           class="glass py-6 rounded-3xl font-medium text-lg hover:scale-105 transition-transform">Contact</a>
+      </div>
+      <button onclick="hideCategoriesModal()" 
+              class="mt-8 w-full py-4 glass rounded-3xl text-lg font-medium">Close</button>
     </div>
   </div>
-</div>
 
-<!-- 2. ADVERT CARD (New - Smaller) -->
-<div class="glass-advert-card" id="advertCard">
-  <div class="card-inner">
-    <div class="card-header">
-      <h3>Promote Your Business</h3>
-      <p>Image & Video Advertisements</p>
+  <!-- FEATURED SLIDER -->
+  <section id="featured" class="max-w-screen-2xl mx-auto px-6 md:px-12 pb-20">
+    <div class="flex items-end justify-between mb-8">
+      <h2 class="section-title font-semibold tracking-tight">Featured Innovations</h2>
+      <div class="hidden md:flex items-center gap-4">
+        <button onclick="prevSlide()" class="glass w-12 h-12 rounded-3xl flex items-center justify-center text-3xl hover:scale-110 transition-transform">‹</button>
+        <button onclick="nextSlide()" class="glass w-12 h-12 rounded-3xl flex items-center justify-center text-3xl hover:scale-110 transition-transform">›</button>
+      </div>
     </div>
 
-    <div class="service-buttons" id="advertServiceButtons">
-      <button class="service-btn image-ad" id="imageAdBtn">🖼️ Image Advertisement</button>
-      <button class="service-btn video-ad" id="videoAdBtn">🎥 Video Advertisement</button>
+    <div class="carousel-container glass rounded-3xl p-2 md:p-4 shadow-2xl">
+      <div id="carouselTrack" class="carousel-track rounded-3xl overflow-hidden">
+        <!-- Populated dynamically from Firebase "innovation" node -->
+      </div>
     </div>
 
-    <!-- Placeholder for future expansion if needed -->
-    <div class="form-section" id="advertFormSection" style="display:none;">
-      <p style="text-align:center; opacity:0.8; padding:20px 0;">
-        Contact us for custom image/video ad packages.<br>
-        <strong>Fast delivery • High engagement</strong>
-      </p>
-      <!-- You can expand this later with a form if you want -->
+    <div class="flex md:hidden justify-center gap-3 mt-6">
+      <button onclick="goToSlide(0)" class="carousel-dot w-3 h-3 rounded-full bg-white/30"></button>
+      <button onclick="goToSlide(1)" class="carousel-dot w-3 h-3 rounded-full bg-white/30"></button>
+      <button onclick="goToSlide(2)" class="carousel-dot w-3 h-3 rounded-full bg-white/30"></button>
     </div>
-  </div>
-</div>
+  </section>
 
-<style>
-/* Common smaller card styles */
-.glass-promo-card, .glass-advert-card {
-  width: 100%;
-  max-width: 340px;
-  margin: 20px auto;
-  background: rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(22px);
-  border: 1.6px solid rgba(255, 255, 255, 0.28);
-  border-radius: 26px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
-  color: white;
-  transition: all 0.4s ease;
-  position: relative;
-}
+  <!-- ABOUT SECTION -->
+  <section id="about" class="max-w-screen-2xl mx-auto px-6 md:px-12 py-20">
+    <div class="glass rounded-3xl p-8 md:p-12 max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div class="relative">
+        <div class="aspect-square rounded-3xl overflow-hidden border-4 border-white/10 shadow-2xl">
+          <img src="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360" 
+               alt="Mark Mellon" class="w-full h-full object-cover">
+        </div>
+      </div>
 
-.card-inner {
-  padding: 20px;
-}
+      <div>
+        <span class="uppercase text-blue-400 text-sm font-medium tracking-widest">Our Story</span>
+        <h2 class="section-title font-semibold tracking-tight mt-3 mb-6">About MARKMELLON INDUSTRIES</h2>
+        <div class="text-zinc-300 text-lg leading-relaxed space-y-6">
+          <p>Founded in Kampala with a passion for groundbreaking innovation, MARKMELLON INDUSTRIES turns bold ideas into reality. We specialize in cutting-edge engineering, creative design, and sustainable technology solutions.</p>
+          <p>Our mission is simple: empower visionaries like you to shape the future. Every project is crafted with precision, creativity, and an unwavering commitment to excellence.</p>
+        </div>
 
-.card-header {
-  text-align: center;
-  margin-bottom: 18px;
-}
+        <button onclick="showReadMore()" 
+                class="mt-10 glass px-8 py-4 rounded-3xl font-medium flex items-center gap-3 text-lg hover:scale-105 transition-transform">
+          Read the full story <span class="text-2xl">→</span>
+        </button>
+      </div>
+    </div>
+  </section>
 
-.card-header h3 {
-  font-size: 18.5px;
-  margin: 0 0 5px 0;
-  font-weight: 700;
-}
+  <!-- MARKMELLON MOMENTS GRID -->
+  <section id="gallery" class="max-w-screen-2xl mx-auto px-6 md:px-12 py-20 bg-black/30">
+    <div class="glass rounded-3xl p-8 md:p-12">
+      <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-10">
+        <div>
+          <span class="uppercase text-purple-400 text-sm font-medium tracking-widest">Visual Archive</span>
+          <h2 class="section-title font-semibold tracking-tight">MarkMellon Moments</h2>
+        </div>
+        <a href="gallery.html" class="mt-4 md:mt-0 glass px-8 py-4 rounded-3xl font-medium flex items-center gap-3 text-lg hover:scale-105 transition-transform">
+          View all projects <span class="text-2xl">→</span>
+        </a>
+      </div>
 
-.card-header p {
-  font-size: 13px;
-  opacity: 0.85;
-  margin: 0;
-}
+      <div id="momentsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Populated dynamically from Firebase "images" node -->
+      </div>
+    </div>
+  </section>
 
-.service-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
+  <!-- SOCIAL MEDIA CARDS -->
+  <section class="max-w-screen-2xl mx-auto px-6 md:px-12 py-20">
+    <div class="text-center mb-12">
+      <span class="uppercase text-sm font-medium tracking-widest text-white/70">Stay Connected</span>
+      <h2 class="section-title font-semibold tracking-tight">Follow MARKMELLON</h2>
+    </div>
 
-.service-btn {
-  flex: 1;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 16px;
-  padding: 14px 10px;
-  color: white;
-  font-weight: 600;
-  font-size: 14.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      <a href="https://www.instagram.com/markmellonindustries" target="_blank" class="glass rounded-3xl p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform group">
+        <div class="w-16 h-16 flex items-center justify-center text-6xl mb-6">📸</div>
+        <span class="text-2xl font-semibold">Instagram</span>
+      </a>
+      <a href="https://www.facebook.com/markmellonindustries" target="_blank" class="glass rounded-3xl p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform group">
+        <div class="w-16 h-16 flex items-center justify-center text-6xl mb-6">📘</div>
+        <span class="text-2xl font-semibold">Facebook</span>
+      </a>
+      <a href="https://x.com/markmellonind" target="_blank" class="glass rounded-3xl p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform group">
+        <div class="w-16 h-16 flex items-center justify-center text-6xl mb-6">𝕏</div>
+        <span class="text-2xl font-semibold">X</span>
+      </a>
+      <a href="https://www.linkedin.com/company/markmellonindustries" target="_blank" class="glass rounded-3xl p-8 flex flex-col items-center justify-center hover:scale-105 transition-transform group">
+        <div class="w-16 h-16 flex items-center justify-center text-6xl mb-6">🔗</div>
+        <span class="text-2xl font-semibold">LinkedIn</span>
+      </a>
+    </div>
+  </section>
 
-.service-btn:hover {
-  transform: translateY(-3px);
-  background: rgba(255,255,255,0.20);
-}
+  <!-- FOOTER -->
+  <footer class="bg-black py-12 border-t border-white/10">
+    <div class="max-w-screen-2xl mx-auto px-6 md:px-12 text-center text-zinc-500 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>© 2026 MARKMELLON INDUSTRIES • Kampala, Uganda</div>
+      <div class="flex gap-8 text-xs">
+        <a href="#" class="hover:text-white transition-colors">Privacy</a>
+        <a href="#" class="hover:text-white transition-colors">Terms</a>
+        <a href="#" class="hover:text-white transition-colors">Careers</a>
+      </div>
+      <div>Made with passion for innovation</div>
+    </div>
+  </footer>
 
-/* Form styles (same for both cards) */
-.form-section {
-  display: none;
-  animation: fadeIn 0.35s ease forwards;
-}
-
-.form-group input {
-  width: 100%;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 12px;
-  padding: 13px 14px;
-  color: white;
-  font-size: 14.5px;
-  margin-bottom: 14px;
-  outline: none;
-}
-
-.form-group input:focus {
-  border-color: #22c55e;
-}
-
-.share-section h4 {
-  font-size: 14px;
-  text-align: center;
-  margin: 0 0 12px 0;
-}
-
-.share-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 12px;
-}
-
-.share-btn {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  border-radius: 50px;
-  padding: 9px 14px;
-  font-size: 13px;
-  color: white;
-  cursor: pointer;
-}
-
-.progress-bar {
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-  text-align: center;
-  font-size: 13.5px;
-  font-weight: 600;
-  border-radius: 30px;
-  padding: 6px;
-}
-
-.request-btn {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  width: 100%;
-  cursor: pointer;
-}
-
-.request-btn:disabled {
-  background: #555;
-  cursor: not-allowed;
-}
-
-.pay-btn {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  width: 100%;
-  cursor: pointer;
-}
-
-/* Advert specific colors */
-.image-ad { border-color: #3b82f6; }
-.video-ad { border-color: #ec4899; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 480px) {
-  .glass-promo-card, .glass-advert-card {
-    max-width: 94%;
-    border-radius: 22px;
-  }
-  .card-inner { padding: 18px; }
-}
-</style>
-
-<script>
-// ============== FIREBASE CONFIG (replace with yours) ==============
-const firebaseConfig = {
+  <script>
+    // ==================== FIREBASE CONFIG ====================
+    const firebaseConfig = {
       apiKey: "AIzaSyA6abD4TVTEAzn7jLqvf62GXKCDLg8PeNw",
       authDomain: "markmellon-874a3.firebaseapp.com",
       projectId: "markmellon-874a3",
@@ -320,127 +342,157 @@ const firebaseConfig = {
       measurementId: "G-XMMWYVH4HG"
     };
 
-let db;
-function initFirebase() {
-  if (typeof firebase === "undefined") return false;
-  if (!db) {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.database();
-  }
-  return true;
-}
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
-// Shared collapse function
-function collapseAllCards() {
-  // Collapse promo card
-  document.getElementById('promoFormSection').style.display = 'none';
-  document.getElementById('promoServiceButtons').style.display = 'flex';
-  document.getElementById('freePromoCard').classList.remove('expanded');
+    // Load background from Firebase node "background"
+    function loadBackground() {
+      database.ref('background').once('value', (snapshot) => {
+        const url = snapshot.val();
+        if (url) {
+          document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.88)), url('${url}')`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          document.body.style.backgroundAttachment = 'fixed';
+        }
+      });
+    }
 
-  // Collapse advert card (if you add expansion later)
-  document.getElementById('advertFormSection').style.display = 'none';
-  document.getElementById('advertServiceButtons').style.display = 'flex';
-}
+    // Load Featured Innovations with improved slide animation
+    let currentSlide = 0;
+    let totalSlides = 0;
 
-// Click anywhere on page to collapse
-document.addEventListener('click', (e) => {
-  const promoCard = document.getElementById('freePromoCard');
-  const advertCard = document.getElementById('advertCard');
+    function loadFeaturedInnovations() {
+      const track = document.getElementById('carouselTrack');
+      track.innerHTML = '';
 
-  if (!promoCard.contains(e.target) && !advertCard.contains(e.target)) {
-    collapseAllCards();
-  }
-});
+      database.ref('innovation').limitToLast(3).once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
 
-// ==================== FREE PROMO CARD LOGIC (same as before, but smaller) ====================
-let promoShareCount = 0;
-const MAX_SHARES = 5;
+        const items = Object.values(data);
+        totalSlides = items.length;
 
-function createPromoShareButtons() {
-  const container = document.getElementById('promoShareButtons');
-  container.innerHTML = `
-    <button class="share-btn" data-platform="whatsapp">WhatsApp</button>
-    <button class="share-btn" data-platform="telegram">Telegram</button>
-    <button class="share-btn" data-platform="x">X</button>
-    <button class="share-btn" data-platform="copy">Copy</button>
-  `;
+        items.forEach((item, index) => {
+          const slideHTML = `
+            <div class="carousel-slide" data-index="${index}">
+              <div class="relative aspect-video md:aspect-[16/9] bg-black rounded-3xl overflow-hidden">
+                <img src="${item.src}" class="w-full h-full object-cover" alt="${item.title || 'Innovation'}">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-8">
+                  <div>
+                    <span class="px-4 py-1 bg-white/10 text-xs font-medium rounded-3xl">IMAGE</span>
+                    <h3 class="text-4xl font-semibold tracking-tight mt-3">${item.title || 'Innovation'}</h3>
+                    <p class="text-zinc-300 mt-2">${item.desc || ''}</p>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          track.innerHTML += slideHTML;
+        });
 
-  container.querySelectorAll('.share-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.classList.contains('clicked')) return;
-      btn.classList.add('clicked');
-      promoShareCount = Math.min(promoShareCount + 1, MAX_SHARES);
-      document.getElementById('promoShareCount').textContent = promoShareCount;
+        // Initialize carousel after content is loaded
+        setTimeout(() => {
+          updateCarousel();
+        }, 100);
+      });
+    }
 
-      if (promoShareCount >= MAX_SHARES) {
-        document.getElementById('promoRequestBtn').disabled = false;
+    function updateCarousel() {
+      const track = document.getElementById('carouselTrack');
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+      // Add active class for animation trigger
+      document.querySelectorAll('.carousel-slide').forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateCarousel();
+    }
+
+    // Load Moments Grid from "images" node
+    function loadMomentsGrid() {
+      const container = document.getElementById('momentsGrid');
+      container.innerHTML = '';
+
+      database.ref('images').limitToLast(4).once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        Object.values(data).forEach(img => {
+          const html = `
+            <div class="aspect-square rounded-3xl overflow-hidden border border-white/10 hover:scale-105 transition-transform cursor-pointer">
+              <img src="${img.src}" class="w-full h-full object-cover">
+            </div>`;
+          container.innerHTML += html;
+        });
+      });
+    }
+
+    // Categories Modal
+    function showCategoriesModal() {
+      document.getElementById('categoriesModal').classList.remove('hidden');
+      document.getElementById('categoriesModal').classList.add('flex');
+    }
+
+    function hideCategoriesModal() {
+      document.getElementById('categoriesModal').classList.add('hidden');
+      document.getElementById('categoriesModal').classList.remove('flex');
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+
+    function logout() {
+      if (confirm('Logout from MARKMELLON INDUSTRIES?')) {
+        alert('Logged out successfully!');
+        window.location.href = 'index.html';
       }
-    });
-  });
-}
+    }
 
-function expandPromoCard(service) {
-  document.getElementById('promoSelectedService').value = service;
-  document.getElementById('promoTitle').textContent = service === 'tiktok' 
-    ? 'Get 500 Free TikTok Likes' 
-    : 'Get 100 Free Instagram Followers';
+    function showReadMore() {
+      const modalHTML = `
+        <div onclick="if(event.target.id === 'modalOverlay') this.remove()" id="modalOverlay"
+             class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-center justify-center p-6">
+          <div onclick="event.stopImmediatePropagation()" class="glass max-w-xl w-full rounded-3xl p-10 text-left">
+            <h3 class="text-4xl font-semibold mb-6">Our Full Story</h3>
+            <div class="prose prose-invert text-zinc-300">
+              <p>Since our founding in Kampala, MARKMELLON INDUSTRIES has been at the forefront of innovation...</p>
+            </div>
+            <button onclick="this.closest('.fixed').remove()" class="mt-10 w-full py-5 rounded-3xl glass text-lg font-medium">Close Story</button>
+          </div>
+        </div>`;
+      const modal = document.createElement('div');
+      modal.innerHTML = modalHTML;
+      document.body.appendChild(modal.firstElementChild);
+    }
 
-  document.getElementById('promoServiceButtons').style.display = 'none';
-  document.getElementById('promoFormSection').style.display = 'block';
-  document.getElementById('freePromoCard').classList.add('expanded');
+    // Initialize
+    window.onload = function () {
+      loadBackground();
+      loadFeaturedInnovations();
+      loadMomentsGrid();
 
-  promoShareCount = 0;
-  document.getElementById('promoShareCount').textContent = '0';
-  createPromoShareButtons();
-  document.getElementById('promoRequestBtn').disabled = true;
-  document.getElementById('promoPayBtn').style.display = 'none';
-}
+      // Auto-advance carousel
+      setInterval(() => {
+        if (totalSlides > 0) nextSlide();
+      }, 5000);
 
-// Submit to Firebase (same logic as before)
-document.getElementById('promoRequestBtn').addEventListener('click', () => {
-  // ... (add your full Firebase submit logic here - same as previous version)
-  // For brevity, I'm showing structure only. Copy the submitToFirebase function from previous response
-  alert("✅ Request sent! (Firebase integration ready)");
-  collapseAllCards(); // close after success
-});
-
-// Button listeners
-document.getElementById('promoTiktokBtn').addEventListener('click', (e) => {
-  e.stopImmediatePropagation();
-  expandPromoCard('tiktok');
-});
-document.getElementById('promoInstagramBtn').addEventListener('click', (e) => {
-  e.stopImmediatePropagation();
-  expandPromoCard('instagram');
-});
-
-// ==================== ADVERT CARD LOGIC ====================
-document.getElementById('imageAdBtn').addEventListener('click', (e) => {
-  e.stopImmediatePropagation();
-  // For now just show a message. You can expand with a form later
-  alert("🖼️ Image Advertisement package selected.\n\nContact us for pricing and details.");
-  // If you want expansion similar to promo card, let me know
-});
-
-document.getElementById('videoAdBtn').addEventListener('click', (e) => {
-  e.stopImmediatePropagation();
-  alert("🎥 Video Advertisement package selected.\n\nContact us for pricing and details.");
-});
-
-// Prevent clicks inside cards from closing them
-document.querySelectorAll('.glass-promo-card, .glass-advert-card').forEach(card => {
-  card.addEventListener('click', (e) => {
-    e.stopImmediatePropagation();
-  });
-});
-
-console.log('%c✅ Two smaller glass cards ready with outside-click close!', 'color:#22c55e; font-size:14px');
-</script>
-  <!-- Footer -->
-  <footer class="bg-black py-12 border-t border-white/10">
-    <div class="max-w-screen-2xl mx-auto px-6 text-center text-zinc-500 text-sm">
-      © 2026 MARKMELLONINDUSTRYS
-    </div>
-  </footer>
+      console.log('%c✅ MARKMELLON INDUSTRIES - Featured slider with slide animation ready', 'color:#60a5fa');
+    };
+  </script>
 </body>
 </html>
